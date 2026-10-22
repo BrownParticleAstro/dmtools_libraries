@@ -25,8 +25,8 @@ print(hello())  # "hello"
 Clone the repo and install in editable mode:
 
 ```bash
-git clone https://github.com/YOURUSER/mylib.git
-cd mylib
+git clone https://github.com/BrownParticleAstro/dmtools_libraries.git
+cd dmtools_libraries
 python -m venv .venv
 source .venv/bin/activate
 pip install -e .
