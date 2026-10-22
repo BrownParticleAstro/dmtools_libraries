@@ -1,6 +1,6 @@
-# mylib
+# dmtools_libraries
 
-Short one-line description of what mylib does.
+Short one-line description of what dmtools_libraries does.
 
 [![PyPI](https://img.shields.io/pypi/v/mylib)](https://pypi.org/project/mylib/)
 [![Python](https://img.shields.io/pypi/pyversions/mylib)](https://pypi.org/project/mylib/)
@@ -9,13 +9,13 @@ Short one-line description of what mylib does.
 ## Installation
 
 ```bash
-pip install mylib
+pip install dmtools_libraries
 ```
 
 ## Usage
 
 ```python
-from mylib import hello
+from dmtools_libraries import hello
 
 print(hello())  # "hello"
 ```
