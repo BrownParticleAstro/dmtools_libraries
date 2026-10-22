@@ -1,6 +1,6 @@
 # mylib
 
-Short one-line description of what mylib does.
+Short one-line description of what dmtools_libraries does.
 
 This README covers how the package is built and published to PyPI. Publishing is automated: creating a GitHub release builds the package and uploads it to PyPI using [trusted publishing](https://docs.pypi.org/trusted-publishers/), so no API token is stored anywhere.
 
@@ -21,7 +21,7 @@ Relevant files:
 | File | Purpose |
 |------|---------|
 | `pyproject.toml` | Package name, version and build config (hatchling) |
-| `src/mylib/` | Package source |
+| `src/dmtools_libraries/` | Package source |
 | `.github/workflows/publish.yml` | Build and publish pipeline |
 
 ## One-time setup
@@ -37,9 +37,9 @@ On pypi.org: Account settings > Publishing > Add a new pending publisher.
 
 | Field | Value |
 |-------|-------|
-| PyPI project name | `mylib` |
+| PyPI project name | `dmtools_libraries` |
 | Owner | `YOURUSER` |
-| Repository | `mylib` |
+| Repository | `dmtools_libraries` |
 | Workflow filename | `publish.yml` |
 | Environment | `pypi` |
 
