@@ -1,0 +1,15 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "dmtools_libraries"            # must be unique on PyPI, so check pypi.org/project/<name> first
+version = "0.1.0"
+description = "dmtools libraries"
+readme = "README.md"
+requires-python = ">=3.9"
+license = "MIT"
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/YOURUSER/mylib"
