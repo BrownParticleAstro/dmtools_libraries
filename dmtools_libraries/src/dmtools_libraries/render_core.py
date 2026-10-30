@@ -8,9 +8,9 @@ import matplotlib.lines as mlines
 from matplotlib import gridspec
 from matplotlib.ticker import LogFormatterMathtext, LogLocator
 
-from dmtools_libraries.style import get_style_mpl
-from dmtools_libraries.units import convert_mass_units
-from dmtools_libraries.plot_labels import get_x_label
+from dmtools_libraries.helpers import get_style_mpl
+from dmtools_libraries.helpers import convert_mass_units
+from dmtools_libraries.helpers import get_x_label
 
 async def render_plot_core(
     plot_data: Dict[str, Any],
