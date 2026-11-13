@@ -61,7 +61,7 @@ async def render_plot_core(
         color = display_properties.get('color', 'black')
 
         # Get matplotlib kwargs from your style library
-        line_plot_kwargs = get_style_mpl(color, style)
+        line_plot_kwargs = get_canonical_style_mpl(color, style)
         line_plot_kwargs.pop('style', None)
         line_plot_kwargs.pop('fill', None)
 
@@ -96,7 +96,7 @@ async def render_plot_core(
                 traces_xy.append((unit_x, y))  # NEW
 
                 if style == 'fill' and len(list_data) != 2:  # CHANGED: two-trace case handled below
-                    fill_plot_kwargs = get_style_mpl(color, style)
+                    fill_plot_kwargs = get_canonical_style_mpl(color, style)
                     fill_plot_kwargs.pop('style', None)
                     fill_plot_kwargs.pop('marker', None)
                     fill_plot_kwargs.pop('markersize', None)
@@ -107,7 +107,7 @@ async def render_plot_core(
 
             # NEW: two traces with independent x lists -> closed polygon (trace 1 forward, trace 2 reversed)
             if style == 'fill' and len(list_data) == 2:
-                fill_plot_kwargs = get_style_mpl(color, style)
+                fill_plot_kwargs = get_canonical_style_mpl(color, style)
                 fill_plot_kwargs.pop('style', None)
                 fill_plot_kwargs.pop('marker', None)
                 fill_plot_kwargs.pop('markersize', None)
@@ -211,11 +211,11 @@ async def render_legend_core(display_data_list: List[Dict[str, Any]], output_typ
 
             trace_name = f"({data_id}):{data_properties.get('label_short', '')}"
 
-            line_plot_kwargs = get_style_mpl(color, style)
+            line_plot_kwargs = get_canonical_style_mpl(color, style)
             line_plot_kwargs.pop("style", None)
             line_plot_kwargs.pop("fill", None)
 
-            fill_plot_kwargs = get_style_mpl(color, style)
+            fill_plot_kwargs = get_canonical_style_mpl(color, style)
             fill_plot_kwargs.pop("style", None)
             fill_plot_kwargs.pop("marker", None)
             fill_plot_kwargs.pop("markersize", None)
