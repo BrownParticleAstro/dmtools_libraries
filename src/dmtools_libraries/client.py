@@ -160,3 +160,16 @@ class APIClient:
             "api_key": self.dmtools_apikey
         }
         return self._get(endpoint, params, "Calling remove archive data API")
+
+    def schema(self, node_type="Data"):
+        """Fetch the default node payload and JSON schema for a given node type."""
+        endpoint = f"{self.api_url}/schema"
+        params = {"type": node_type}
+        return self._get(endpoint, params, f"Fetching schema for node type: {node_type}")
+
+    def default_node(self, node_type="Data"):
+        """Convenience wrapper around /schema returning the default node only."""
+        schema_response = self.schema(node_type=node_type)
+        if isinstance(schema_response, dict) and "default_node" in schema_response:
+            return schema_response["default_node"]
+        return schema_response
