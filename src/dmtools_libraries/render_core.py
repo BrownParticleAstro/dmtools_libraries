@@ -8,7 +8,7 @@ import matplotlib.lines as mlines
 from matplotlib import gridspec
 from matplotlib.ticker import LogFormatterMathtext, LogLocator
 
-from dmtools_libraries.trace import get_style_mpl
+from dmtools_libraries.trace import get_style_mpl, get_canonical_color, get_canonical_style_mpl,
 from dmtools_libraries.helpers import convert_mass_units
 from dmtools_libraries.helpers import get_x_label
 
