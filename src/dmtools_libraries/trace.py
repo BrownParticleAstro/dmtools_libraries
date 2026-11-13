@@ -249,3 +249,185 @@ def get_clean_color_style(color_in, style_in):
 
     return clean_trace_color, clean_trace_style
 
+# Legacy functions remain unchanged for backward compatibility.
+# New canonical API below for all future use.
+
+_CANONICAL_COLORS = {
+    "black",
+    "red",
+    "green",
+    "blue",
+    "cyan",
+    "grey",
+    "magenta",
+    "yellow",
+    "white",
+}
+
+_CANONICAL_STYLE_MAP = {
+    "line": {
+        "linestyle": "-",
+        "linewidth": 1,
+        "marker": None,
+        "markersize": 0,
+        "fill": False,
+        "style": "line",
+    },
+    "dash": {
+        "linestyle": "--",
+        "linewidth": 1,
+        "marker": None,
+        "markersize": 0,
+        "fill": False,
+        "style": "dash",
+    },
+    "dotted": {
+        "linestyle": ":",
+        "linewidth": 1,
+        "marker": None,
+        "markersize": 0,
+        "fill": False,
+        "style": "dotted",
+    },
+    "point": {
+        "linestyle": "None",
+        "linewidth": 1,
+        "marker": ".",
+        "markersize": 8,
+        "fill": False,
+        "style": "point",
+    },
+    "cross": {
+        "linestyle": "None",
+        "linewidth": 1,
+        "marker": "x",
+        "markersize": 8,
+        "fill": False,
+        "style": "cross",
+    },
+    "circle": {
+        "linestyle": "None",
+        "linewidth": 1,
+        "marker": "o",
+        "markersize": 8,
+        "fill": False,
+        "style": "circle",
+    },
+    "plus": {
+        "linestyle": "None",
+        "linewidth": 1,
+        "marker": "+",
+        "markersize": 8,
+        "fill": False,
+        "style": "plus",
+    },
+    "star": {
+        "linestyle": "None",
+        "linewidth": 1,
+        "marker": "*",
+        "markersize": 12,
+        "fill": False,
+        "style": "star",
+    },
+    "pentagon": {
+        "linestyle": "None",
+        "linewidth": 1,
+        "marker": "p",
+        "markersize": 10,
+        "fill": False,
+        "style": "pentagon",
+    },
+    "hexagon": {
+        "linestyle": "None",
+        "linewidth": 1,
+        "marker": "h",
+        "markersize": 10,
+        "fill": False,
+        "style": "hexagon",
+    },
+    "triangle-up": {
+        "linestyle": "None",
+        "linewidth": 1,
+        "marker": "^",
+        "markersize": 10,
+        "fill": False,
+        "style": "triangle-up",
+    },
+    "triangle-down": {
+        "linestyle": "None",
+        "linewidth": 1,
+        "marker": "v",
+        "markersize": 10,
+        "fill": False,
+        "style": "triangle-down",
+    },
+    "triangle-left": {
+        "linestyle": "None",
+        "linewidth": 1,
+        "marker": "<",
+        "markersize": 10,
+        "fill": False,
+        "style": "triangle-left",
+    },
+    "triangle-right": {
+        "linestyle": "None",
+        "linewidth": 1,
+        "marker": ">",
+        "markersize": 10,
+        "fill": False,
+        "style": "triangle-right",
+    },
+}
+
+
+_FILL_ALPHA = {
+    "fill-light": 0.15,
+    "fill-medium": 0.35,
+    "fill-dark": 0.60,
+}
+
+
+def get_canonical_color(color):
+    """Validate and normalize a canonical color name."""
+    if not isinstance(color, str):
+        raise ValueError(f"Expected string color, got {type(color).__name__}")
+    color = color.lower()
+    if color not in _CANONICAL_COLORS:
+        allowed = ", ".join(sorted(_CANONICAL_COLORS))
+        raise ValueError(f"Unsupported color {color!r}. Choose from: {allowed}")
+    return color
+
+
+def get_canonical_style_mpl(color, style):
+    """Return Matplotlib kwargs for canonical color and style inputs.
+
+    Fill opacity is expressed in the style name:
+    - fill-light
+    - fill-medium
+    - fill-dark
+    """
+    color = get_canonical_color(color)
+
+    style_name = style.lower() if isinstance(style, str) else style
+    if style_name in _FILL_ALPHA:
+        return {
+            "color": color,
+            "linestyle": None,
+            "linewidth": 0,
+            "marker": None,
+            "markersize": 0,
+            "alpha": _FILL_ALPHA[style_name],
+            "fill": True,
+            "style": "fill",
+        }
+
+    if style_name not in _CANONICAL_STYLE_MAP:
+        allowed = ", ".join(sorted(_CANONICAL_STYLE_MAP.keys()) + ["fill-light", "fill-medium", "fill-dark"])
+        raise ValueError(f"Unsupported style {style!r}. Choose from: {allowed}")
+
+    result = {
+        "color": color,
+        **_CANONICAL_STYLE_MAP[style_name],
+    }
+    return result
+
