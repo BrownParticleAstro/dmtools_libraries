@@ -63,7 +63,13 @@ async def render_plot_core(
         # Get matplotlib kwargs from your style library
         line_plot_kwargs = get_canonical_style_mpl(color, style)
         line_plot_kwargs.pop('style', None)
-        line_plot_kwargs.pop('fill', None)
+        is_fill = line_plot_kwargs.pop('fill', False)
+        if is_fill:
+            fill_plot_kwargs = {
+                key: line_plot_kwargs[key] for key in ('color', 'alpha')
+            }
+            # Draw more opaque regions first and keep fills below lines.
+            fill_plot_kwargs['zorder'] = 1.0 - fill_plot_kwargs['alpha']
 
         for data in display.get("data", []):
             data_properties = data.get('properties', {})
@@ -95,26 +101,11 @@ async def render_plot_core(
                 ax.plot(unit_x, y, **line_plot_kwargs)
                 traces_xy.append((unit_x, y))  # NEW
 
-                if style == 'fill' and len(list_data) != 2:  # CHANGED: two-trace case handled below
-                    fill_plot_kwargs = get_canonical_style_mpl(color, style)
-                    fill_plot_kwargs.pop('style', None)
-                    fill_plot_kwargs.pop('marker', None)
-                    fill_plot_kwargs.pop('markersize', None)
-                    fill_plot_kwargs.pop('linestyle', None)
-                    fill_plot_kwargs.pop('linewidth', None)
-                    fill_plot_kwargs.pop('fill', None)
+                if is_fill and len(list_data) != 2:
                     ax.fill_between(unit_x, y, **fill_plot_kwargs)
 
             # NEW: two traces with independent x lists -> closed polygon (trace 1 forward, trace 2 reversed)
-            if style == 'fill' and len(list_data) == 2:
-                fill_plot_kwargs = get_canonical_style_mpl(color, style)
-                fill_plot_kwargs.pop('style', None)
-                fill_plot_kwargs.pop('marker', None)
-                fill_plot_kwargs.pop('markersize', None)
-                fill_plot_kwargs.pop('linestyle', None)
-                fill_plot_kwargs.pop('linewidth', None)
-                fill_plot_kwargs.pop('fill', None)
-
+            if is_fill and len(list_data) == 2:
                 (x1, y1), (x2, y2) = traces_xy
                 ax.fill(list(x1) + list(x2)[::-1], list(y1) + list(y2)[::-1], **fill_plot_kwargs)
 
